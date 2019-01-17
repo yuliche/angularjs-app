@@ -33,7 +33,7 @@ gulp.task('scripts', function(){
 
 gulp.task('browserify', function() {
     // Grabs the app.js file
-    return browserify('./src/app/app.js')
+    return browserify('./src/app/app.module.js')
         // bundles it and creates a file called main.js
         .transform(babelify.configure({
             presets: ["es2015"]
