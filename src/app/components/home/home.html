@@ -1,6 +1,6 @@
 <div ui-view='header'></div>
 <div>
-    <h1 ng-bind="$ctrl.showText()"></h1>
-    <label>First:</label><input ng-model="name" type="text">
-    <p>{{name}}</p>
+    <h1 ng-bind="$ctrl.text"></h1>
+    <label>Type smth: </label><input ng-model="name" type="text">
+    <p>Your input: {{name}}</p>
 </div>

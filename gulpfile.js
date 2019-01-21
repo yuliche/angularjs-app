@@ -9,8 +9,7 @@ const buffer = require('vinyl-buffer');
 const jshint = require('gulp-jshint');
 const uglify = require('gulp-uglify');
 const babelify = require('babelify');
-const fancylog = require('fancylog');
-const plumber = require('gulp-plumber')
+const babel = require('gulp-babel');
 
 const development = environments.development;
 const production = environments.production;
@@ -26,24 +25,24 @@ gulp.task('lint', function () {
 
 gulp.task('scripts', function () {
     return gulp.src(['./src/assets/**/*.js', configFile])
+        .pipe(babel({
+            presets: ['es2015']
+        }))
         .pipe(uglify())
         .pipe(concat('vendor.min.js'))
         .pipe(gulp.dest('./public/'));
 });
 
 gulp.task('browserify', function () {
-    // Grabs the app.js file
     return browserify('./src/app/app.module.js')
-        // bundles it and creates a file called main.js
-        .transform(babelify.configure({
-            presets: ["es2015"]
-        }))
+        .transform(babelify)
         .bundle()
         .on('error', function (err) {
             console.log('Error : ' + err.message);
         })
         .pipe(source('main.js'))
-        .pipe(gulp.dest('./public/'));
+        .pipe(gulp.dest('./public/'))
+        .pipe(buffer());
 })
 
 gulp.task('scss', function () {
@@ -64,10 +63,7 @@ gulp.task('browser-sync', ['build'], function () {
     browserSync.init({
         server: {
             baseDir: "./public",
-            // The key is the url to match
-            // The value is which folder to serve (relative to your current working directory)
             routes: {
-                "/bower_components": "bower_components",
                 "/node_modules": "node_modules"
             }
         },

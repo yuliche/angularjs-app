@@ -2,10 +2,8 @@ import template from './home.html';
 
 class Controller {
     /** @ngInject */
-    constructor() {}
-
-    showText() {
-        this.text = 'Hello from about component';
+    constructor() {
+    this.text = 'Hello from home component';
     }
 }
 
