@@ -5,6 +5,10 @@ class Controller {
     constructor() {
     this.text = 'Hello from home component';
     }
+
+    changeText(){
+       this.text = 'Changed text fom home component';
+    }
 }
 
 export const HomeComponent = {

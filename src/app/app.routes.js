@@ -8,15 +8,13 @@ function routesConfig($stateProvider, $urlRouterProvider) {
 		.state('home', {
 			url: '/',
 			views: {
-				'': { component: 'home' },
-				'header@home': {component: 'header'}
+				'main@': 'home'
 			}
 		})
 		.state('about', {
 			url: '/about',
 			views: {
-				'': { component: 'about' },
-				'header@about': {component: 'header'}
+				'main@': 'about'
 			}
 		});
 
