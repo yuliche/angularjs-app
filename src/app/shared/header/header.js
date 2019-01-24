@@ -1,12 +1,12 @@
 import template from './header.html';
 
 class Controller {
-    /** @ngInject */
-    constructor() {
-    }
+  /** @ngInject */
+  constructor() {
+  }
 }
 
 export const HeaderComponent = {
-    template,
-    controller: Controller
+  template,
+  controller: Controller
 };
