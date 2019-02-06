@@ -49,7 +49,7 @@ module.exports = function (grunt) {
     copy: {
       main: {
         expand: true,
-        cwd: 'app/',
+        cwd: 'src/',
         src: ['**', '!js/**', '!lib/**', '!**/*.css'],
         dest: 'dist/'
       },
@@ -96,5 +96,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-browser-sync');
   grunt.loadNpmTasks('grunt-browserify');
 
-  grunt.registerTask('default', ['jshint', 'browserify', 'connect:server']);
+  //grunt.registerTask('copy', ['copy']);
+
+  grunt.registerTask('default', ['copy', 'jshint',  'browserify', 'connect:server']);
 };
