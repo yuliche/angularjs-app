@@ -43,7 +43,7 @@ gulp.task('browserify', function () {
         .pipe(source('main.js'))
         .pipe(gulp.dest('./public/'))
         .pipe(buffer());
-})
+});
 
 gulp.task('scss', function () {
     gulp.src('./src/assets/scss/*.scss')
@@ -54,7 +54,7 @@ gulp.task('scss', function () {
 gulp.task('copy', ['browserify', 'scss'], function () {
     gulp.src(['./src/**/*.html', './src/**/*.css'])
         .pipe(gulp.dest('./public'))
-        .pipe(browserSync.stream())
+        .pipe(browserSync.stream());
 });
 
 gulp.task('build', ['lint', 'scss', 'copy', 'scripts']);
@@ -74,4 +74,4 @@ gulp.task('browser-sync', ['build'], function () {
 gulp.task('default', ['browser-sync'], function () {
     gulp.watch("./src/**/*.*", ["build"]);
     gulp.watch("./public/**/*.*").on('change', browserSync.reload);
-})
+});
