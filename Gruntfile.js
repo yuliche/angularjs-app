@@ -11,11 +11,6 @@ module.exports = function (grunt) {
       }
     },
 
-    watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint']
-    },
-
     browserify: {
       dist: {
         options: {
@@ -30,32 +25,11 @@ module.exports = function (grunt) {
       }
     },
 
-    connect: {
-      server: {
-        options: {
-          keepalive: true,
-          hostname: 'localhost',
-          port: 3001,
-          base: './dist'
-        }
-      }
-    },
-    // not used for tasks:
-    concat: {
-      options: {
-        separator: ';'
-      },
-      dist: {
-        src: ['src/**/*.js'],
-        dest: 'dist/main.js'
-      }
-    },
-
     copy: {
       main: {
         expand: true,
         cwd: 'src/',
-        src: ['**', '!js/**', '!lib/**', '!assets/styles/*.scss'],
+        src: ['**', '!app/**/*.js', '!env/**', '!assets/styles/*.scss'],
         dest: 'dist/'
       }
     },
@@ -70,27 +44,29 @@ module.exports = function (grunt) {
 
     browserSync: {
       bsFiles: {
-        src: 'assets/css/*.css'
+        src: 'dist/assets/css/*.css'
       },
       options: {
         server: {
-          baseDir: "./"
+          baseDir: "./dist"
         }
       }
     },
 
+    watch: {
+      files: ['src/assets/**/*.scss'],
+      tasks: ['sass']
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-browser-sync');
   grunt.loadNpmTasks('grunt-browserify');
 
-  grunt.registerTask('default', ['copy', 'sass', 'jshint', 'browserify', 'connect:server']);
+  grunt.registerTask('default', ['copy', 'sass', 'jshint', 'browserify', 'browserSync', 'watch']);
 };
