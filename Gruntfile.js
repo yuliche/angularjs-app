@@ -10,6 +10,7 @@ module.exports = function (grunt) {
         'esversion': 6,
       }
     },
+
     watch: {
       files: ['<%= jshint.files %>'],
       tasks: ['jshint']
@@ -18,7 +19,11 @@ module.exports = function (grunt) {
     browserify: {
       dist: {
         options: {
-          transform: [['babelify', { presets: ['es2015'] }]]
+          transform: [
+            ['babelify', {
+              presets: ['es2015']
+            }]
+          ]
         },
         src: ['./src/app/app.module.js'],
         dest: 'dist/main.js',
@@ -30,12 +35,12 @@ module.exports = function (grunt) {
         options: {
           keepalive: true,
           hostname: 'localhost',
-          port: 8080,
+          port: 3001,
           base: './dist'
         }
       }
     },
-// not used for tasks:
+    // not used for tasks:
     concat: {
       options: {
         separator: ';'
@@ -49,25 +54,16 @@ module.exports = function (grunt) {
     copy: {
       main: {
         expand: true,
-        cwd: 'app/',
-        src: ['**', '!js/**', '!lib/**', '!**/*.css'],
+        cwd: 'src/',
+        src: ['**', '!js/**', '!lib/**', '!assets/styles/*.scss'],
         dest: 'dist/'
-      },
-      shims: {
-        expand: true,
-        cwd: 'app/lib/webshim/shims',
-        src: ['**'],
-        dest: 'dist/js/shims'
       }
     },
 
     sass: {
       dist: {
-        options: {
-          style: 'expanded'
-        },
         files: {
-          'main.css': 'src/assets/scss/style.scss',
+          'dist/assets/styles/style.css': 'src/assets/styles/style.scss'
         }
       }
     },
@@ -96,5 +92,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-browser-sync');
   grunt.loadNpmTasks('grunt-browserify');
 
-  grunt.registerTask('default', ['jshint', 'browserify', 'connect:server']);
+  grunt.registerTask('default', ['copy', 'sass', 'jshint', 'browserify', 'connect:server']);
 };
