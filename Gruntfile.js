@@ -44,7 +44,10 @@ module.exports = function (grunt) {
 
     watch: {
       files: ['src/**/*'],
-      tasks: ['build']
+      tasks: ['build'],
+      options: {
+        livereload: true,
+      },
     },
 
     browserSync: {
