@@ -2,7 +2,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    clean: ["dist", '.tmp'],
+    clean: ['dist/**/*', '.sass-cache/'],
 
     jshint: {
       all: ['Gruntfile.js', 'src/app/**/*.js'],
@@ -43,20 +43,19 @@ module.exports = function (grunt) {
     },
 
     watch: {
-      files: ['src/assets/styles/*.scss', 'src/assets/styles/**/.scss'],
-      tasks: ['sass']
+      files: ['src/**/*'],
+      tasks: ['build']
     },
 
     browserSync: {
       bsFiles: {
         src: [
-          'dist/assets/styles/*.css',
-          'app/*.html'
+          'src/**/*'
         ]
       },
       options: {
+        watchTask: true,
         server: {
-          watchTask: true,
           baseDir: "./dist",
           routes: {
             "/node_modules": "node_modules"
@@ -76,5 +75,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-browser-sync');
   grunt.loadNpmTasks('grunt-browserify');
 
-  grunt.registerTask('default', ['clean', 'copy', 'sass', 'jshint', 'browserify', 'browserSync', 'watch']);
+  grunt.registerTask('build', ['clean', 'copy', 'sass', 'jshint', 'browserify']);
+  grunt.registerTask('default', ['build', 'browserSync', 'watch']);
 };
