@@ -42,20 +42,28 @@ module.exports = function (grunt) {
       }
     },
 
+    watch: {
+      files: ['src/assets/styles/*.scss', 'src/assets/styles/**/.scss'],
+      tasks: ['sass']
+    },
+
     browserSync: {
       bsFiles: {
-        src: 'dist/assets/css/*.css'
+        src: [
+          'dist/assets/styles/*.css',
+          'app/*.html'
+        ]
       },
       options: {
         server: {
-          baseDir: "./dist"
-        }
+          watchTask: true,
+          baseDir: "./dist",
+          routes: {
+            "/node_modules": "node_modules"
+          }
+        },
+        browser: "chrome"
       }
-    },
-
-    watch: {
-      files: ['src/assets/**/*.scss'],
-      tasks: ['sass']
     }
   });
 
@@ -68,5 +76,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-browser-sync');
   grunt.loadNpmTasks('grunt-browserify');
 
-  grunt.registerTask('default', ['copy', 'sass', 'jshint', 'browserify', 'browserSync', 'watch']);
+  grunt.registerTask('default', ['clean', 'copy', 'sass', 'jshint', 'browserify', 'browserSync', 'watch']);
 };
